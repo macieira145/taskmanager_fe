@@ -1,1 +1,16 @@
-<p>task-item works!</p>
+<div class="flex min-h-[80px] bg-gray-100 mb-2 px-12 mx-12">
+    <div class="flex w-full flex-row items-center justify-center">
+        <mat-checkbox (change)="completeTask()"/>
+
+        <div class="flex flex-col">
+            <span class="text-lg"><b>{{task.title}}</b></span>
+            <span>{{task.description}}</span>
+        </div>
+
+        <div class="ml-auto">
+            <button mat-stroked-fab color="primary" aria-label="Example icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

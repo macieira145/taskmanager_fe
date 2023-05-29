@@ -1,3 +1,21 @@
-<div class="flex w-full h-fit py-8 justify-start">
-    <h1 class="text-4xl"><b>{{title}}</b></h1>
+<div class="flex flex-col w-full h-fit py-16 justify-start items-center px-12">
+    <form class="flex flex-col w-full grow justify-center" [formGroup]="form" (ngSubmit)="create()">
+        <div class="flex w-full mb-4">
+            <h1 class="text-4xl"><b>Task Manager</b></h1>
+
+            <div class="flex justify-center ml-auto">
+                <button mat-stroked-button color="primary" type="submit" class="w-full" [disabled]="!form.valid">
+                    Add
+                </button>
+            </div>
+        </div>
+
+        <mat-form-field>
+            <input type="text" matInput placeholder="Title" formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="text" matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+    </form>
 </div>

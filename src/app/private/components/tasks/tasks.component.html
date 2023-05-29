@@ -1,1 +1,15 @@
-<p>tasks works!</p>
+<div class="flex flex-col w-full h-full justify-center items-center">
+    <div class="flex flex-col border-4 rounded-md w-1/2 h-3/4">
+        <app-header></app-header>
+
+        <div class="flex w-full flex-col">
+            <app-task-item
+                *ngFor="let task of tasks",
+                [task]="task",
+                (onCompleteTask)="completeTask(task)"
+                (onDeleteTask)="deleteTask(task)"
+                >
+            </app-task-item>
+        </div>
+    </div>
+</div>
