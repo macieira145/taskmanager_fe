@@ -1,0 +1,46 @@
+<div class="flex w-full h-full justify-center items-center">
+    <div class="flex flex-col min-h-[50%] min-w-[75%] lg:min-w-[50%] xl:min-w-[35%] border-2 rounded-md px-12 py-16 items-center">
+
+        <h1 class="text-4xl text-blue-600 mb-8 md:mb-12"><b>REGISTER</b></h1>
+
+        <form class="flex flex-col w-full grow justify-center" [formGroup]="form" (ngSubmit)="register()">
+
+            <mat-form-field>
+                <input type="text" matInput placeholder="Name" formControlName="name">
+                <mat-error *ngIf="name.touched && name.hasError('required')">Name is required</mat-error>
+                <mat-error *ngIf="name.touched && name.hasError('maxlength')">Name must be shorter than 100
+                    characters</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input type="email" matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="email.touched && email.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="email.touched && email.hasError('email')">Email format is invalid</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input type="password" matInput placeholder="Password" formControlName="password">
+                <mat-error *ngIf="password.touched && password.hasError('required')">Password is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input type="password" matInput placeholder="Password Confirmation" formControlName="passwordConfirm">
+                <mat-error *ngIf="passwordConfirm.touched && passwordConfirm.hasError('required')">
+                    Password confirmation is required
+                </mat-error>
+                <mat-error *ngIf="passwordConfirm.touched && passwordConfirm.hasError('passwordsNotMatching')">
+                    Passwords not matching
+                </mat-error>
+            </mat-form-field>
+
+            <div class="flex justify-center w-full">
+                <button mat-stroked-button color="primary" type="submit" class="w-full" [disabled]="!form.valid">
+                    Register
+                </button>
+            </div>
+
+        </form>
+
+        <a class="mt-auto mt-8 md:mt-12" [routerLink]="['../login']">Already registered? Go to Login</a>
+    </div>
+</div>
