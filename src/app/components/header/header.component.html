@@ -11,11 +11,11 @@
         </div>
 
         <mat-form-field>
-            <input type="text" matInput placeholder="Title" formControlName="title">
+            <input (ngModelChange)="updateTitle($event)" type="text" matInput placeholder="Title" formControlName="title">
         </mat-form-field>
 
         <mat-form-field>
-            <input type="text" matInput placeholder="Description" formControlName="description">
+            <input (ngModelChange)="updateDescription($event)" type="text" matInput placeholder="Description" formControlName="description">
         </mat-form-field>
     </form>
 </div>

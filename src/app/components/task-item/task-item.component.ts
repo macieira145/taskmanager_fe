@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Task } from 'src/app/interfaces/task.interface';
-import { TaskService } from 'src/app/private/services/task.service';
 
 @Component({
   selector: 'app-task-item',
@@ -15,9 +14,13 @@ export class TaskItemComponent {
 
   completed = new FormControl(this.task.completed)
 
-  constructor(taskService : TaskService) {}
+  constructor() {}
 
   completeTask() {
     
+  }
+
+  deleteTask(task: Task) {
+    this.onDeleteTask.emit(task)
   }
 }
