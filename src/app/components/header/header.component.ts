@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { Task } from 'src/app/interfaces/task.interface';
 import { TaskService } from 'src/app/private/services/task.service';
@@ -14,11 +14,13 @@ import { TaskService } from 'src/app/private/services/task.service';
     }
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnChanges {
 
   @Input() task: Task = { id: 0, title: "Default", description: "Default", completed: false };
+  @Input() action: string = "create"
 
   @Output() onAddTask: EventEmitter<Task> = new EventEmitter();
+  @Output() onUpdateTask : EventEmitter<Task> = new EventEmitter();
 
   form: FormGroup = new FormGroup({
     title: new FormControl(this.task.title, [Validators.required]),
@@ -27,14 +29,38 @@ export class HeaderComponent {
 
   constructor(private taskService: TaskService) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    let taskChange = changes['task']
+    let actionChange = changes['action']
+
+    if(taskChange !== undefined)
+      this.task = taskChange.currentValue
+
+    if(actionChange !== undefined)
+      this.action = actionChange.currentValue
+
+    this.form.patchValue({
+      title: this.task.title,
+      description: this.task.description
+    })
+
+  }
+
   create() {
     if (this.form.valid) {
-
-      this.onAddTask.emit({
-        title: this.title.value,
-        description: this.description.value
-      })
-
+      if (this.action == "create") {
+        this.onAddTask.emit({
+          title: this.title.value,
+          description: this.description.value
+        })
+      } else {
+        this.onUpdateTask.emit({
+          id: this.task.id,
+          title: this.title.value,
+          description: this.description.value
+        })
+      }
+      
       this.form.patchValue({
         title: "",
         description: ""

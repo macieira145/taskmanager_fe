@@ -12,8 +12,8 @@ export class TaskService {
 
   constructor(private http: HttpClient, private snackbar: MatSnackBar) { }
 
-  create(task: Task) : Observable<Response> {
-    return this.http.post<Response>('http://localhost:5294/api/Task/', task, {responseType: 'json'})
+  createTask(task: Task): Observable<Response> {
+    return this.http.post<Response>('http://localhost:5294/api/Task/', task, { responseType: 'json' })
       .pipe(
         tap((response) => {
           this.snackbar.open(`Task created successfully!`, 'Close', {
@@ -34,7 +34,7 @@ export class TaskService {
     return this.http.get<Task[]>('http://localhost:5294/api/Task/')
   }
 
-  deleteTask(task: Task) : Observable<Task>{
+  deleteTask(task: Task): Observable<Task> {
     return this.http.delete<Task>(`http://localhost:5294/api/Task/${task.id}`).pipe(
       tap((response) => {
         this.snackbar.open(`Task deleted successfully!`, 'Close', {
@@ -49,5 +49,23 @@ export class TaskService {
         return throwError(e)
       })
     )
+  }
+
+  updateTask(task: Task): Observable<Response> {
+    return this.http.put<Response>(`http://localhost:5294/api/Task/${task.id}`, task, { responseType: 'json' })
+      .pipe(
+        tap((response) => {
+          this.snackbar.open(`Task updated successfully!`, 'Close', {
+            duration: 2000, horizontalPosition: 'center', verticalPosition: 'top'
+          })
+        }),
+        catchError(e => {
+          this.snackbar.open(`User could not be created, due to: ${e.error.message}`, 'Close', {
+            duration: 4000, horizontalPosition: 'center', verticalPosition: 'top'
+          })
+
+          return throwError(e)
+        })
+      )
   }
 }
