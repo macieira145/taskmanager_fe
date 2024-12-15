@@ -8,7 +8,7 @@ import { JsonPipe } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class TaskApiService {
 
   constructor(private http: HttpClient, private snackbar: MatSnackBar) { }
 

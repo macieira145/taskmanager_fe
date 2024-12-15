@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { Task } from 'src/app/interfaces/task.interface';
-import { TaskService } from 'src/app/private/services/task.service';
-
+import { TaskLocalService } from 'src/app/private/services/task-local-service/task.service';
+import {v4 as uuidv4} from 'uuid';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,7 +16,7 @@ import { TaskService } from 'src/app/private/services/task.service';
 })
 export class HeaderComponent implements OnChanges {
 
-  @Input() task: Task = { id: 0, title: "Default", description: "Default", completed: false };
+  @Input() task: Task = { id: uuidv4(), title: "Default", description: "Default", completed: false };
   @Input() action: string = "create"
 
   @Output() onAddTask: EventEmitter<Task> = new EventEmitter();
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnChanges {
     description: new FormControl(this.task.description, [Validators.required])
   })
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskLocalService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     let taskChange = changes['task']
